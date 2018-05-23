@@ -29,6 +29,10 @@ class Deck
   def cards
     @cards
   end
+
+  def card(position)
+    "#{@cards[position -1].rank} of #{@cards[position -1].suit}"
+  end
 end
 
 class Game
@@ -42,4 +46,4 @@ class Game
 end
 
 game = Game.new
-p game.deck.cards[23].suit
+puts game.deck.card 23
