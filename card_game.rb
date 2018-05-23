@@ -11,6 +11,10 @@ class Card
   def rank
     @rank
   end
+
+  def show
+    "#{@rank} of #{@suit}"
+  end
 end
 
 class Deck
@@ -30,14 +34,34 @@ class Deck
     @cards
   end
 
-  def card(position)
-    "#{@cards[position -1].rank} of #{@cards[position -1].suit}"
+  def deal(number_of_cards)
+    cards = []
+    (1..number_of_cards).each do #|i|
+      cards << @cards.shift
+    end
+    cards
+  end
+end
+
+class Player
+  def initialize(deck)
+    @cards = deck.deal(5)
+  end
+
+  def cards
+    @cards
   end
 end
 
 class Game
   def initialize
     @deck = Deck.new
+    # p @deck.cards[0].show
+    @player1 = Player.new @deck
+    @player2 = Player.new @deck
+    @player3 = Player.new @deck
+    @player4 = Player.new @deck
+    # p @player1.cards[0].show
   end
 
   def deck
@@ -46,4 +70,4 @@ class Game
 end
 
 game = Game.new
-puts game.deck.card 23
+puts "Game ready! The deck is shuffled and 4 players have 5 cards each."
