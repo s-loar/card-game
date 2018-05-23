@@ -18,7 +18,7 @@ class Card
   end
 
   def show
-    "#{@rank} of #{@suit}, value #{@value}"
+    puts "#{@rank} of #{@suit}, value #{@value}"
   end
 end
 
@@ -69,11 +69,11 @@ class Player
 
   def show_hand
     puts "#{@name} #{@name == "You" ? "have" : "has"}"
-    @cards.each { |card| puts card.show }
+    @cards.each { |card| card.show }
   end
 
   def show_random_card
-    puts @cards.sample.show
+    @cards.sample.show
   end
 
   def hand_value
@@ -97,29 +97,49 @@ class Game
   def play
     @player.cards = @deck.deal(2)
     @player.show_hand
-    puts @player.hand_value
+    # puts @player.hand_value
     @dealer.cards = @deck.deal(2)
-    @dealer.show_hand
-    puts @dealer.hand_value
     if @dealer.hand_value == 21
-      puts "Game over: Dealer has 21"
+      puts "Game over: Dealer has 21. Dealer wins."
+      @dealer.show_hand
     elsif @player.hand_value == 21
-      puts "Game over: You have 21"
+      puts "Game over: You have 21. You win."
     else
-      puts "No one has 21. Input 'hit' or 'stand' to continue."
       puts "Dealer shows: "
       @dealer.show_random_card
+      puts "No one has 21. Input 'hit' or 'stand' to continue."
       input = "hit"
-      while input != "stand" do
+      while input != "stand" && @player.hand_value < 21 do
         input = gets.chomp
         if input.downcase == "hit"
           puts "you are hit"
           @player.cards << @deck.hit
           @player.show_hand
-          puts "You have #{@player.hand_value} points"
         end
       end
-      # player done here
+      puts "You have #{@player.hand_value} points"
+      if @player.hand_value > 21
+        puts "Game over: Dealer wins"
+      else
+        # game continues for dealer
+        puts "Dealer's turn now."
+        while @dealer.hand_value < 16 do
+          @dealer.cards << @deck.hit
+        end
+        @dealer.show_hand
+        puts "Dealer has #{@dealer.hand_value} points"
+        if @dealer.hand_value == 21
+          puts "Game over: Dealer wins"
+        elsif @player.hand_value == 21 || @dealer.hand_value > 21
+          puts "Game over: You win"
+        else
+          if @dealer.hand_value >= @player.hand_value
+            puts "Game over: Dealer wins"
+          else
+            puts "Game over: You win"
+          end
+        end
+      end
     end
   end
 end
