@@ -2,6 +2,7 @@ class Card
   def initialize(suit,rank)
     @suit = suit
     @rank = rank
+    @value = rank.to_i > 0 ? rank.to_i : 10
   end
 
   def suit
@@ -13,7 +14,7 @@ class Card
   end
 
   def show
-    "#{@rank} of #{@suit}"
+    "#{@rank} of #{@suit}, value #{@value}"
   end
 end
 
@@ -44,7 +45,8 @@ class Deck
 end
 
 class Player
-  def initialize(deck)
+  def initialize(name, deck)
+    @name = name
     @cards = deck.deal(5)
   end
 
@@ -53,26 +55,46 @@ class Player
   end
 
   def show_hand
+    puts "#{@name} has"
     @cards.each { |card| puts card.show }
+    puts
   end
 end
 
 class Game
   def initialize
     @deck = Deck.new
-    # p @deck.cards[0].show
-    @player1 = Player.new @deck
-    @player2 = Player.new @deck
-    @player3 = Player.new @deck
-    @player4 = Player.new @deck
-    # p @player1.cards[0].show
-    @player1.show_hand
+    @player1 = Player.new "Joe", @deck
+    @player2 = Player.new "Jane", @deck
+    @player3 = Player.new "Jake", @deck
+    @player4 = Player.new "Tiny", @deck
   end
 
   def deck
     @deck
   end
+
+  def play
+    @player1.show_hand
+    @player2.show_hand
+    @player3.show_hand
+    @player4.show_hand
+  end
+
+  def player1
+    @player1
+  end
+  def player2
+    @player2
+  end
+  def player3
+    @player3
+  end
+  def player4
+    @player4
+  end
 end
 
 game = Game.new
 puts "Game ready! The deck is shuffled and 4 players have 5 cards each."
+game.play
