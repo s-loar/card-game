@@ -13,6 +13,10 @@ class Card
     @rank
   end
 
+  def value
+    @value
+  end
+
   def show
     "#{@rank} of #{@suit}, value #{@value}"
   end
@@ -45,29 +49,37 @@ class Deck
 end
 
 class Player
-  def initialize(name, deck)
+  def initialize(name)
     @name = name
-    @cards = deck.deal(5)
+    @cards = []
   end
 
   def cards
     @cards
   end
 
+  def cards=(cards)
+    @cards = cards
+    # p @cards
+  end
+
   def show_hand
-    puts "#{@name} has"
+    puts "#{@name} #{@name == "You" ? "have" : "has"}"
     @cards.each { |card| puts card.show }
-    puts
+  end
+
+  def hand_value
+    sum = 0
+    @cards.each { |card| sum += card.value }
+    sum
   end
 end
 
 class Game
   def initialize
     @deck = Deck.new
-    @player1 = Player.new "Joe", @deck
-    @player2 = Player.new "Jane", @deck
-    @player3 = Player.new "Jake", @deck
-    @player4 = Player.new "Tiny", @deck
+    @player = Player.new "You"
+    @dealer = Player.new "Dealer"
   end
 
   def deck
@@ -75,26 +87,27 @@ class Game
   end
 
   def play
-    @player1.show_hand
-    @player2.show_hand
-    @player3.show_hand
-    @player4.show_hand
-  end
-
-  def player1
-    @player1
-  end
-  def player2
-    @player2
-  end
-  def player3
-    @player3
-  end
-  def player4
-    @player4
+    @player.cards = @deck.deal(2)
+    @player.show_hand
+    puts @player.hand_value
+    @dealer.cards = @deck.deal(2)
+    @dealer.show_hand
+    puts @dealer.hand_value
+    if @dealer.hand_value == 21
+      puts "Game over: Dealer has 21"
+    else
+      puts "Dealer does not have 21. Input 'hit' or 'stand'."
+      input = "hit"
+      while input != "stand" do
+        input = gets.chomp
+        if input.downcase == "hit"
+          puts "you are hit"
+        end
+      end
+    end
   end
 end
 
 game = Game.new
-puts "Game ready! The deck is shuffled and 4 players have 5 cards each."
+puts "Game ready!"
 game.play
