@@ -41,10 +41,14 @@ class Deck
 
   def deal(number_of_cards)
     cards = []
-    (1..number_of_cards).each do #|i|
+    (1..number_of_cards).each do
       cards << @cards.shift
     end
     cards
+  end
+
+  def hit
+    @cards.shift
   end
 end
 
@@ -66,6 +70,10 @@ class Player
   def show_hand
     puts "#{@name} #{@name == "You" ? "have" : "has"}"
     @cards.each { |card| puts card.show }
+  end
+
+  def show_random_card
+    puts @cards.sample.show
   end
 
   def hand_value
@@ -95,15 +103,23 @@ class Game
     puts @dealer.hand_value
     if @dealer.hand_value == 21
       puts "Game over: Dealer has 21"
+    elsif @player.hand_value == 21
+      puts "Game over: You have 21"
     else
-      puts "Dealer does not have 21. Input 'hit' or 'stand'."
+      puts "No one has 21. Input 'hit' or 'stand' to continue."
+      puts "Dealer shows: "
+      @dealer.show_random_card
       input = "hit"
       while input != "stand" do
         input = gets.chomp
         if input.downcase == "hit"
           puts "you are hit"
+          @player.cards << @deck.hit
+          @player.show_hand
+          puts "You have #{@player.hand_value} points"
         end
       end
+      # player done here
     end
   end
 end
