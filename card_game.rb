@@ -51,6 +51,10 @@ class Player
   def cards
     @cards
   end
+
+  def show_hand
+    @cards.each { |card| puts card.show }
+  end
 end
 
 class Game
@@ -62,6 +66,7 @@ class Game
     @player3 = Player.new @deck
     @player4 = Player.new @deck
     # p @player1.cards[0].show
+    @player1.show_hand
   end
 
   def deck
