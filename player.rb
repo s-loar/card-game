@@ -8,11 +8,11 @@ class Player
 
   def show_hand
     puts "#{@name} #{@name == "You" ? "have" : "has"}"
-    @cards.each { |card| card.show }
+    @cards.each { |card| puts card.show }
   end
 
   def show_random_card
-    @cards.sample.show
+    puts @cards.sample.show
   end
 
   def hand_value

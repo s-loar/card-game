@@ -8,6 +8,6 @@ class Card
   end
 
   def show
-    puts "#{@rank} of #{@suit}, value #{@value}"
+    "#{@rank} of #{@suit}, value #{@value}"
   end
 end
