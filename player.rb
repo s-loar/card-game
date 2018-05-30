@@ -16,8 +16,6 @@ class Player
   end
 
   def hand_value
-    sum = 0
-    @cards.each { |card| sum += card.value }
-    sum
+    @cards.map(&:value).inject(0, &:+)
   end
 end

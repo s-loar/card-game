@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Card do
   before :each do
-     @card = Card.new "Hearts", "Queen"
- end
+    @card = Card.new "Hearts", "Queen"
+  end
 
- describe "#new" do
+  describe "#new" do
     it "takes two parameters and returns a Card object" do
-        expect(@card).to be_an_instance_of Card
+      expect(@card).to be_an_instance_of Card
     end
   end
 
