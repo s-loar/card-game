@@ -5,9 +5,9 @@ describe Deck do
      @deck = Deck.new
  end
 
- describe "#new" do
+  describe "#new" do
     it "returns a Deck object" do
-        expect(@deck).to be_an_instance_of Deck
+      expect(@deck).to be_an_instance_of Deck
     end
   end
 
