@@ -1,20 +1,10 @@
 class Card
+  attr_reader :suit, :rank, :value
+
   def initialize(suit,rank)
     @suit = suit
     @rank = rank
     @value = rank.to_i > 0 ? rank.to_i : 10
-  end
-
-  def suit
-    @suit
-  end
-
-  def rank
-    @rank
-  end
-
-  def value
-    @value
   end
 
   def show
@@ -23,6 +13,8 @@ class Card
 end
 
 class Deck
+  attr_reader :cards
+
   def initialize
     suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
     ranks = ['1', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
@@ -33,10 +25,6 @@ class Deck
        end
      end
      @cards.shuffle!
-  end
-
-  def cards
-    @cards
   end
 
   def deal(number_of_cards)
@@ -53,18 +41,11 @@ class Deck
 end
 
 class Player
+  attr_accessor :cards
+
   def initialize(name)
     @name = name
     @cards = []
-  end
-
-  def cards
-    @cards
-  end
-
-  def cards=(cards)
-    @cards = cards
-    # p @cards
   end
 
   def show_hand
@@ -90,14 +71,9 @@ class Game
     @dealer = Player.new "Dealer"
   end
 
-  def deck
-    @deck
-  end
-
   def play
     @player.cards = @deck.deal(2)
     @player.show_hand
-    # puts @player.hand_value
     @dealer.cards = @deck.deal(2)
     if @dealer.hand_value == 21
       puts "Game over: Dealer has 21. Dealer wins."
