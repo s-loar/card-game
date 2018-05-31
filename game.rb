@@ -1,6 +1,6 @@
-require './card'
-require './deck'
-require './player'
+require_relative 'card'
+require_relative 'deck'
+require_relative 'player'
 
 class Game
   def initialize
