@@ -7,7 +7,7 @@ class Player
   end
 
   def show_hand
-    puts "#{@name} #{@name == "You" ? "have" : "has"}"
+    puts "#{@name} #{@name.downcase == "you" ? "have" : "has"}"
     @cards.each { |card| puts card.show }
   end
 
@@ -16,6 +16,6 @@ class Player
   end
 
   def hand_value
-    @cards.map(&:value).inject(0, &:+)
+    @cards.sum(&:value)
   end
 end
